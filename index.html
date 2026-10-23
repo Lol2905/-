@@ -1,248 +1,397 @@
-{\rtf1\ansi\ansicpg1251\cocoartf2822
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+Вот обновленный код «Душнометра 3000»! Теперь викторина состоит из 20 угарных вопросов, а под кнопкой доната добавлена отдельная аккуратная кнопка прямой связи, ведущая на твой Telegram avs_odin.
+Полностью замени старый код в репозитории на этот вариант:
+html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Душнометр 3000 — Мега-тест на занудство</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
 
-\f0\fs24 \cf0 <!DOCTYPE html>\
-<html lang="ru">\
-<head>\
-    <meta charset="UTF-8">\
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
-    <title>\uc0\u1043 \u1077 \u1085 \u1077 \u1088 \u1072 \u1090 \u1086 \u1088  \u1054 \u1090 \u1084 \u1072 \u1079 \u1086 \u1082  3000</title>\
-    <link href="https://googleapis.com" rel="stylesheet">\
-    <style>\
-        :root \{\
-            --bg-color: #0f172a;\
-            --card-bg: #1e293b;\
-            --accent-color: #38bdf8;\
-            --text-main: #f8fafc;\
-            --text-muted: #94a3b8;\
-        \}\
-\
-        /* \uc0\u1057 \u1090 \u1080 \u1083 \u1100  \u1076 \u1083 \u1103  \u1082 \u1086 \u1096 \u1072 \u1095 \u1100 \u1077 \u1081  \u1090 \u1077 \u1084 \u1099  */\
-        body.cat-theme \{\
-            --bg-color: #1a120b;\
-            --card-bg: #3c2a21;\
-            --accent-color: #e5ba73;\
-        \}\
-\
-        /* \uc0\u1057 \u1090 \u1080 \u1083 \u1100  \u1076 \u1083 \u1103  \u1090 \u1077 \u1084 \u1099  \u1076 \u1088 \u1091 \u1079 \u1077 \u1081  */\
-        body.friends-theme \{\
-            --bg-color: #121824;\
-            --card-bg: #1e2640;\
-            --accent-color: #f43f5e;\
-        \}\
-\
-        * \{\
-            box-sizing: border-box;\
-            margin: 0;\
-            padding: 0;\
-            font-family: 'Montserrat', sans-serif;\
-            transition: all 0.3s ease;\
-        \}\
-\
-        body \{\
-            background-color: var(--bg-color);\
-            color: var(--text-main);\
-            display: flex;\
-            flex-direction: column;\
-            align-items: center;\
-            justify-content: center;\
-            min-height: 100vh;\
-            padding: 20px;\
-            overflow-x: hidden;\
-        \}\
-\
-        .container \{\
-            max-width: 600px;\
-            width: 100%;\
-            text-align: center;\
-        \}\
-\
-        h1 \{\
-            font-size: 2.5rem;\
-            font-weight: 900;\
-            margin-bottom: 10px;\
-            text-transform: uppercase;\
-            letter-spacing: 2px;\
-        \}\
-\
-        .subtitle \{\
-            color: var(--text-muted);\
-            margin-bottom: 30px;\
-            font-size: 1rem;\
-        \}\
-\
-        .tabs \{\
-            display: flex;\
-            background-color: var(--card-bg);\
-            padding: 6px;\
-            border-radius: 12px;\
-            margin-bottom: 30px;\
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);\
-        \}\
-\
-        .tab \{\
-            flex: 1;\
-            padding: 12px;\
-            border: none;\
-            background: transparent;\
-            color: var(--text-muted);\
-            font-weight: 700;\
-            font-size: 0.9rem;\
-            cursor: pointer;\
-            border-radius: 8px;\
-        \}\
-\
-        .tab.active \{\
-            background-color: var(--accent-color);\
-            color: var(--bg-color);\
-        \}\
-\
-        .card \{\
-            background-color: var(--card-bg);\
-            padding: 40px 30px;\
-            border-radius: 24px;\
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);\
-            margin-bottom: 30px;\
-            min-height: 180px;\
-            display: flex;\
-            align-items: center;\
-            justify-content: center;\
-            position: relative;\
-            border: 2px solid transparent;\
-        \}\
-\
-        .card:hover \{\
-            border-color: var(--accent-color);\
-            transform: translateY(-2px);\
-        \}\
-\
-        #excuse-text \{\
-            font-size: 1.4rem;\
-            font-weight: 700;\
-            line-height: 1.5;\
-            animation: fadeIn 0.4s ease;\
-        \}\
-\
-        .btn-generate \{\
-            background-color: var(--accent-color);\
-            color: var(--bg-color);\
-            border: none;\
-            padding: 20px 40px;\
-            font-size: 1.2rem;\
-            font-weight: 900;\
-            border-radius: 50px;\
-            cursor: pointer;\
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);\
-            text-transform: uppercase;\
-            letter-spacing: 1px;\
-            width: 100%;\
-            max-width: 320px;\
-        \}\
-\
-        .btn-generate:hover \{\
-            transform: scale(1.05);\
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);\
-        \}\
-\
-        .btn-generate:active \{\
-            transform: scale(0.98);\
-        \}\
-\
-        @keyframes fadeIn \{\
-            from \{ opacity: 0; transform: translateY(10px); \}\
-            to \{ opacity: 1; transform: translateY(0); \}\
-        \}\
-\
-        @media (max-width: 480px) \{\
-            h1 \{ font-size: 1.8rem; \}\
-            #excuse-text \{ font-size: 1.1rem; \}\
-            .tab \{ font-size: 0.8rem; padding: 10px 5px; \}\
-        \}\
-    </style>\
-</head>\
-<body>\
-\
-    <div class="container">\
-        <h1>\uc0\u1054 \u1090 \u1084 \u1072 \u1079 \u1082 \u1080  3000</h1>\
-        <p class="subtitle">\uc0\u1043 \u1077 \u1085 \u1077 \u1088 \u1080 \u1088 \u1091 \u1081  \u1078 \u1077 \u1083 \u1077 \u1079 \u1085 \u1086 \u1077  \u1072 \u1083 \u1080 \u1073 \u1080  \u1074  \u1086 \u1076 \u1080 \u1085  \u1082 \u1083 \u1080 \u1082 </p>\
-\
-        <div class="tabs">\
-            <button class="tab active" onclick="setCategory('boss')">\uc0\u55357 \u56508  \u1064 \u1077 \u1092 \u1091 </button>\
-            <button class="tab" onclick="setCategory('cat')">\uc0\u55357 \u56328  \u1050 \u1086 \u1090 \u1091 </button>\
-            <button class="tab" onclick="setCategory('friends')">\uc0\u55356 \u57211  \u1044 \u1088 \u1091 \u1079 \u1100 \u1103 \u1084 </button>\
-        </div>\
-\
-        <div class="card">\
-            <div id="excuse-text">\uc0\u1053 \u1072 \u1078 \u1084 \u1080  \u1085 \u1072  \u1082 \u1085 \u1086 \u1087 \u1082 \u1091  \u1085 \u1080 \u1078 \u1077 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1089 \u1087 \u1072 \u1089 \u1090 \u1080  \u1089 \u1074 \u1086 \u1102  \u1088 \u1077 \u1087 \u1091 \u1090 \u1072 \u1094 \u1080 \u1102 ...</div>\
-        </div>\
-\
-        <button class="btn-generate" onclick="generateExcuse()">\uc0\u1052 \u1085 \u1077  \u1085 \u1091 \u1078 \u1085 \u1072  \u1086 \u1090 \u1084 \u1072 \u1079 \u1082 \u1072 !</button>\
-    </div>\
-\
-    <script>\
-        // \uc0\u1057 \u1102 \u1076 \u1072  \u1084 \u1086 \u1078 \u1085 \u1086  \u1076 \u1086 \u1087 \u1080 \u1089 \u1099 \u1074 \u1072 \u1090 \u1100  \u1089 \u1074 \u1086 \u1080  \u1096 \u1091 \u1090 \u1082 \u1080  \u1074 \u1085 \u1091 \u1090 \u1088 \u1080  \u1082 \u1072 \u1074 \u1099 \u1095 \u1077 \u1082  \u1095 \u1077 \u1088 \u1077 \u1079  \u1079 \u1072 \u1087 \u1103 \u1090 \u1091 \u1102 \
-        const excuses = \{\
-            boss: [\
-                "\uc0\u1071  \u1085 \u1077  \u1086 \u1087 \u1086 \u1079 \u1076 \u1072 \u1083 , \u1103  \u1087 \u1088 \u1086 \u1074 \u1086 \u1076 \u1080 \u1083  \u1075 \u1083 \u1091 \u1073 \u1086 \u1082 \u1080 \u1081  \u1072 \u1085 \u1072 \u1083 \u1080 \u1079  \u1088 \u1099 \u1085 \u1082 \u1072  \u1087 \u1086  \u1087 \u1091 \u1090 \u1080  \u1086 \u1090  \u1083 \u1080 \u1092 \u1090 \u1072  \u1076 \u1086  \u1089 \u1090 \u1086 \u1083 \u1072 .",\
-                "\uc0\u1055 \u1088 \u1086 \u1077 \u1082 \u1090  \u1079 \u1072 \u1076 \u1077 \u1088 \u1078 \u1080 \u1074 \u1072 \u1077 \u1090 \u1089 \u1103 , \u1090 \u1072 \u1082  \u1082 \u1072 \u1082  \u1084 \u1099  \u1089 \u1090 \u1086 \u1083 \u1082 \u1085 \u1091 \u1083 \u1080 \u1089 \u1100  \u1089  \u1085 \u1077 \u1087 \u1088 \u1077 \u1076 \u1074 \u1080 \u1076 \u1077 \u1085 \u1085 \u1086 \u1081  \u1082 \u1074 \u1072 \u1085 \u1090 \u1086 \u1074 \u1086 \u1081  \u1076 \u1077 \u1089 \u1080 \u1085 \u1093 \u1088 \u1086 \u1085 \u1080 \u1079 \u1072 \u1094 \u1080 \u1077 \u1081  \u1073 \u1072 \u1079 \u1099  \u1076 \u1072 \u1085 \u1085 \u1099 \u1093 . \u1055 \u1080 \u1096 \u1091  \u1087 \u1072 \u1090 \u1095 .",\
-                "\uc0\u1053 \u1077  \u1089 \u1084 \u1086 \u1075  \u1087 \u1088 \u1080 \u1081 \u1090 \u1080  \u1085 \u1072  \u1089 \u1086 \u1079 \u1074 \u1086 \u1085 : \u1087 \u1088 \u1086 \u1074 \u1072 \u1081 \u1076 \u1077 \u1088  \u1087 \u1088 \u1086 \u1074 \u1086 \u1076 \u1080 \u1083  \u1087 \u1083 \u1072 \u1085 \u1086 \u1074 \u1086 \u1077  \u1086 \u1073 \u1085 \u1086 \u1074 \u1083 \u1077 \u1085 \u1080 \u1077  \u1082 \u1072 \u1073 \u1077 \u1083 \u1103  \u1084 \u1077 \u1090 \u1086 \u1076 \u1086 \u1084  \u1077 \u1075 \u1086  \u1089 \u1083 \u1091 \u1095 \u1072 \u1081 \u1085 \u1086 \u1075 \u1086  \u1087 \u1077 \u1088 \u1077 \u1088 \u1091 \u1073 \u1072 \u1085 \u1080 \u1103 .",\
-                "\uc0\u1071  \u1086 \u1090 \u1087 \u1088 \u1072 \u1074 \u1080 \u1083  \u1086 \u1090 \u1095 \u1077 \u1090  \u1074 \u1086 \u1074 \u1088 \u1077 \u1084 \u1103 , \u1085 \u1086 , \u1087 \u1086 \u1093 \u1086 \u1078 \u1077 , \u1077 \u1075 \u1086  \u1087 \u1077 \u1088 \u1077 \u1093 \u1074 \u1072 \u1090 \u1080 \u1083 \u1080  \u1082 \u1086 \u1088 \u1087 \u1086 \u1088 \u1072 \u1090 \u1080 \u1074 \u1085 \u1099 \u1077  \u1089 \u1087 \u1072 \u1084 -\u1092 \u1080 \u1083 \u1100 \u1090 \u1088 \u1099  \u1080 \u1079 -\u1079 \u1072  \u1089 \u1083 \u1080 \u1096 \u1082 \u1086 \u1084  \u1074 \u1099 \u1089 \u1086 \u1082 \u1086 \u1081  \u1082 \u1086 \u1085 \u1094 \u1077 \u1085 \u1090 \u1088 \u1072 \u1094 \u1080 \u1080  \u1075 \u1077 \u1085 \u1080 \u1072 \u1083 \u1100 \u1085 \u1086 \u1089 \u1090 \u1080 .",\
-                "\uc0\u1048 \u1079 \u1074 \u1080 \u1085 \u1080 \u1090 \u1077  \u1079 \u1072  \u1086 \u1087 \u1086 \u1079 \u1076 \u1072 \u1085 \u1080 \u1077 , \u1103  \u1079 \u1072 \u1089 \u1090 \u1088 \u1103 \u1083  \u1074  \u1101 \u1082 \u1079 \u1080 \u1089 \u1090 \u1077 \u1085 \u1094 \u1080 \u1072 \u1083 \u1100 \u1085 \u1086 \u1084  \u1082 \u1088 \u1080 \u1079 \u1080 \u1089 \u1077  \u1087 \u1088 \u1103 \u1084 \u1086  \u1085 \u1072  \u1074 \u1099 \u1093 \u1086 \u1076 \u1077  \u1080 \u1079  \u1082 \u1086 \u1084 \u1099  \u1089 \u1085 \u1072 .",\
-                "\uc0\u1071  \u1085 \u1077  \u1079 \u1072 \u1083 \u1080 \u1087  \u1085 \u1072  \u1102 \u1090 \u1091 \u1073 \u1077 , \u1103  \u1090 \u1077 \u1089 \u1090 \u1080 \u1088 \u1086 \u1074 \u1072 \u1083  \u1080 \u1085 \u1090 \u1077 \u1088 \u1092 \u1077 \u1081 \u1089  \u1085 \u1072  \u1087 \u1088 \u1077 \u1076 \u1084 \u1077 \u1090  \u1079 \u1072 \u1089 \u1099 \u1087 \u1072 \u1085 \u1080 \u1103  \u1089 \u1083 \u1091 \u1095 \u1072 \u1081 \u1085 \u1086 \u1075 \u1086  \u1087 \u1086 \u1083 \u1100 \u1079 \u1086 \u1074 \u1072 \u1090 \u1077 \u1083 \u1103 ."\
-            ],\
-            cat: [\
-                "\uc0\u1071  \u1085 \u1077  \u1086 \u1087 \u1086 \u1079 \u1076 \u1072 \u1083  \u1089  \u1091 \u1078 \u1080 \u1085 \u1086 \u1084  \u1085 \u1072  5 \u1084 \u1080 \u1085 \u1091 \u1090 , \u1103  \u1074 \u1099 \u1076 \u1077 \u1088 \u1078 \u1080 \u1074 \u1072 \u1083  \u1087 \u1088 \u1072 \u1074 \u1080 \u1083 \u1100 \u1085 \u1099 \u1081  \u1090 \u1077 \u1084 \u1087 \u1077 \u1088 \u1072 \u1090 \u1091 \u1088 \u1085 \u1099 \u1081  \u1073 \u1072 \u1083 \u1072 \u1085 \u1089  \u1087 \u1072 \u1096 \u1090 \u1077 \u1090 \u1072 .",\
-                "\uc0\u1071  \u1082 \u1091 \u1087 \u1080 \u1083  \u1101 \u1090 \u1086 \u1090  \u1076 \u1077 \u1096 \u1077 \u1074 \u1099 \u1081  \u1089 \u1091 \u1093 \u1086 \u1081  \u1082 \u1086 \u1088 \u1084  \u1090 \u1086 \u1083 \u1100 \u1082 \u1086  \u1087 \u1086 \u1090 \u1086 \u1084 \u1091 , \u1095 \u1090 \u1086  \u1076 \u1086 \u1088 \u1086 \u1075 \u1086 \u1081  \u1074 \u1088 \u1077 \u1076 \u1077 \u1085  \u1076 \u1083 \u1103  \u1090 \u1074 \u1086 \u1077 \u1081  \u1072 \u1088 \u1080 \u1089 \u1090 \u1086 \u1082 \u1088 \u1072 \u1090 \u1080 \u1095 \u1077 \u1089 \u1082 \u1086 \u1081  \u1092 \u1080 \u1075 \u1091 \u1088 \u1099 .",\
-                "\uc0\u1071  \u1089 \u1086 \u1075 \u1085 \u1072 \u1083  \u1090 \u1077 \u1073 \u1103  \u1089 \u1086  \u1089 \u1090 \u1091 \u1083 \u1072  \u1085 \u1077  \u1080 \u1079  \u1074 \u1088 \u1077 \u1076 \u1085 \u1086 \u1089 \u1090 \u1080 , \u1072  \u1095 \u1090 \u1086 \u1073 \u1099  \u1089 \u1087 \u1072 \u1089 \u1090 \u1080  \u1090 \u1074 \u1086 \u1080  \u1095 \u1077 \u1088 \u1085 \u1099 \u1077  \u1096 \u1090 \u1072 \u1085 \u1099  \u1086 \u1090  \u1084 \u1086 \u1077 \u1081  \u1073 \u1077 \u1083 \u1086 \u1081  \u1096 \u1077 \u1088 \u1089 \u1090 \u1080  \u1085 \u1072  \u1076 \u1078 \u1080 \u1085 \u1089 \u1072 \u1093 .",\
-                "\uc0\u1071  \u1091 \u1073 \u1088 \u1072 \u1083  \u1082 \u1086 \u1088 \u1086 \u1073 \u1082 \u1091  \u1080 \u1079 -\u1087 \u1086 \u1076  \u1086 \u1073 \u1091 \u1074 \u1080 , \u1087 \u1086 \u1090 \u1086 \u1084 \u1091  \u1095 \u1090 \u1086  \u1086 \u1085 \u1072  \u1085 \u1077  \u1087 \u1086 \u1076 \u1093 \u1086 \u1076 \u1080 \u1083 \u1072  \u1087 \u1086 \u1076  \u1090 \u1074 \u1086 \u1081  \u1092 \u1101 \u1085 \u1096 \u1091 \u1081 -\u1076 \u1080 \u1079 \u1072 \u1081 \u1085  \u1082 \u1086 \u1088 \u1080 \u1076 \u1086 \u1088 \u1072 .",\
-                "\uc0\u1071  \u1085 \u1077  \u1075 \u1083 \u1072 \u1076 \u1080 \u1083  \u1076 \u1088 \u1091 \u1075 \u1086 \u1075 \u1086  \u1082 \u1086 \u1090 \u1072  \u1085 \u1072  \u1091 \u1083 \u1080 \u1094 \u1077 ! \u1054 \u1090  \u1084 \u1077 \u1085 \u1103  \u1087 \u1072 \u1093 \u1085 \u1077 \u1090  \u1096 \u1072 \u1074 \u1077 \u1088 \u1084 \u1086 \u1081  \u1080 \u1089 \u1082 \u1083 \u1102 \u1095 \u1080 \u1090 \u1077 \u1083 \u1100 \u1085 \u1086  \u1074  \u1075 \u1072 \u1089 \u1090 \u1088 \u1086 \u1085 \u1086 \u1084 \u1080 \u1095 \u1077 \u1089 \u1082 \u1080 \u1093  \u1094 \u1077 \u1083 \u1103 \u1093 ."\
-            ],\
-            friends: [\
-                "\uc0\u1056 \u1077 \u1073 \u1103 \u1090 \u1072 , \u1085 \u1077  \u1087 \u1088 \u1080 \u1077 \u1076 \u1091 . \u1059  \u1084 \u1077 \u1085 \u1103  \u1090 \u1091 \u1090  \u1092 \u1086 \u1088 \u1089 -\u1084 \u1072 \u1078 \u1086 \u1088 : \u1076 \u1080 \u1074 \u1072 \u1085  \u1079 \u1072 \u1089 \u1077 \u1083  \u1074  \u1075 \u1083 \u1091 \u1093 \u1091 \u1102  \u1086 \u1073 \u1086 \u1088 \u1086 \u1085 \u1091  \u1080  \u1074 \u1079 \u1103 \u1083  \u1084 \u1077 \u1085 \u1103  \u1074  \u1079 \u1072 \u1083 \u1086 \u1078 \u1085 \u1080 \u1082 \u1080 .",\
-                "\uc0\u1071  \u1091 \u1078 \u1077  \u1074 \u1099 \u1093 \u1086 \u1078 \u1091 ! (\u1055 \u1077 \u1088 \u1077 \u1074 \u1086 \u1076 : \u1103  \u1090 \u1086 \u1083 \u1100 \u1082 \u1086  \u1095 \u1090 \u1086  \u1086 \u1090 \u1082 \u1088 \u1099 \u1083  \u1086 \u1076 \u1080 \u1085  \u1075 \u1083 \u1072 \u1079  \u1080  \u1087 \u1099 \u1090 \u1072 \u1102 \u1089 \u1100  \u1074 \u1089 \u1087 \u1086 \u1084 \u1085 \u1080 \u1090 \u1100 , \u1082 \u1090 \u1086  \u1103 ).",\
-                "\uc0\u1053 \u1077  \u1084 \u1086 \u1075 \u1091  \u1087 \u1080 \u1090 \u1100  \u1074  \u1087 \u1103 \u1090 \u1085 \u1080 \u1094 \u1091 , \u1084 \u1086 \u1081  \u1074 \u1085 \u1091 \u1090 \u1088 \u1077 \u1085 \u1085 \u1080 \u1081  \u1090 \u1072 \u1084 \u1072 \u1076 \u1072  \u1091 \u1096 \u1077 \u1083  \u1085 \u1072  \u1073 \u1086 \u1083 \u1100 \u1085 \u1080 \u1095 \u1085 \u1099 \u1081  \u1087 \u1086  \u1089 \u1086 \u1089 \u1090 \u1086 \u1103 \u1085 \u1080 \u1102  \u1087 \u1077 \u1095 \u1077 \u1085 \u1080 .",\
-                "\uc0\u1071  \u1073 \u1099  \u1089  \u1088 \u1072 \u1076 \u1086 \u1089 \u1090 \u1100 \u1102  \u1087 \u1086 \u1096 \u1077 \u1083  \u1074  \u1073 \u1072 \u1088 , \u1085 \u1086  \u1084 \u1086 \u1081  \u1075 \u1086 \u1088 \u1086 \u1089 \u1082 \u1086 \u1087  \u1082 \u1072 \u1090 \u1077 \u1075 \u1086 \u1088 \u1080 \u1095 \u1077 \u1089 \u1082 \u1080  \u1079 \u1072 \u1087 \u1088 \u1077 \u1097 \u1072 \u1077 \u1090  \u1084 \u1085 \u1077  \u1089 \u1077 \u1075 \u1086 \u1076 \u1085 \u1103  \u1090 \u1088 \u1072 \u1090 \u1080 \u1090 \u1100  \u1076 \u1077 \u1085 \u1100 \u1075 \u1080  \u1080  \u1074 \u1080 \u1076 \u1077 \u1090 \u1100  \u1083 \u1102 \u1076 \u1077 \u1081 .",\
-                "\uc0\u1071  \u1079 \u1072 \u1089 \u1090 \u1088 \u1103 \u1083  \u1074  \u1090 \u1077 \u1082 \u1089 \u1090 \u1091 \u1088 \u1072 \u1093  \u1089 \u1074 \u1086 \u1077 \u1081  \u1082 \u1074 \u1072 \u1088 \u1090 \u1080 \u1088 \u1099 , \u1078 \u1076 \u1091  \u1087 \u1077 \u1088 \u1077 \u1079 \u1072 \u1075 \u1088 \u1091 \u1079 \u1082 \u1080  \u1089 \u1077 \u1088 \u1074 \u1077 \u1088 \u1072 .",\
-                "\uc0\u1052 \u1086 \u1081  \u1087 \u1089 \u1080 \u1093 \u1086 \u1090 \u1077 \u1088 \u1072 \u1087 \u1077 \u1074 \u1090  \u1089 \u1082 \u1072 \u1079 \u1072 \u1083 , \u1095 \u1090 \u1086  \u1084 \u1085 \u1077  \u1085 \u1091 \u1078 \u1085 \u1086  \u1074 \u1088 \u1077 \u1084 \u1077 \u1085 \u1085 \u1086  \u1086 \u1075 \u1088 \u1072 \u1085 \u1080 \u1095 \u1080 \u1090 \u1100  \u1086 \u1073 \u1097 \u1077 \u1085 \u1080 \u1077  \u1089  \u1091 \u1089 \u1087 \u1077 \u1096 \u1085 \u1099 \u1084 \u1080  \u1080  \u1082 \u1088 \u1072 \u1089 \u1080 \u1074 \u1099 \u1084 \u1080  \u1083 \u1102 \u1076 \u1100 \u1084 \u1080 , \u1090 \u1072 \u1082  \u1095 \u1090 \u1086  \u1080 \u1079 \u1074 \u1080 \u1085 \u1080 \u1090 \u1077 ."\
-            ]\
-        \};\
-\
-        let currentCategory = 'boss';\
-\
-        function setCategory(category) \{\
-            currentCategory = category;\
-            \
-            document.querySelectorAll('.tab').forEach((tab) => \{\
-                tab.classList.remove('active');\
-            \});\
-            \
-            const tabIndex = category === 'boss' ? 0 : category === 'cat' ? 1 : 2;\
-            document.querySelectorAll('.tab')[tabIndex].classList.add('active');\
-\
-            document.body.className = '';\
-            if (category !== 'boss') \{\
-                document.body.classList.add(`$\{category\}-theme`);\
-            \}\
-\
-            document.getElementById('excuse-text').innerText = "\uc0\u1050 \u1072 \u1090 \u1077 \u1075 \u1086 \u1088 \u1080 \u1103  \u1089 \u1084 \u1077 \u1085 \u1077 \u1085 \u1072 . \u1046 \u1084 \u1080  \u1082 \u1085 \u1086 \u1087 \u1082 \u1091 !";\
-        \}\
-\
-        function generateExcuse() \{\
-            const list = excuses[currentCategory];\
-            const randomIndex = Math.floor(Math.random() * list.length);\
-            const textElement = document.getElementById('excuse-text');\
-            \
-            textElement.style.animation = 'none';\
-            textElement.offsetHeight; // \uc0\u1057 \u1073 \u1088 \u1086 \u1089  \u1072 \u1085 \u1080 \u1084 \u1072 \u1094 \u1080 \u1080  \u1076 \u1083 \u1103  \u1087 \u1086 \u1074 \u1090 \u1086 \u1088 \u1085 \u1086 \u1075 \u1086  \u1101 \u1092 \u1092 \u1077 \u1082 \u1090 \u1072  \u1087 \u1086 \u1103 \u1074 \u1083 \u1077 \u1085 \u1080 \u1103 \
-            textElement.style.animation = 'fadeIn 0.4s ease';\
-            \
-            textElement.innerText = list[randomIndex];\
-        \}\
-    </script>\
-</body>\
-</html>\
+        body.result-theme {
+            --accent-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #334155;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-color);
+        }
+
+        #question-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .answers-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn-answer {
+            background-color: #334155;
+            color: var(--text-main);
+            border: 2px solid transparent;
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .btn-answer:hover {
+            border-color: var(--accent-color);
+            background-color: #475569;
+            transform: translateX(4px);
+        }
+
+        .btn-start, .btn-restart {
+            background-color: var(--accent-color);
+            color: #1e293b;
+            border: none;
+            padding: 18px 36px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+
+        .btn-start:hover, .btn-restart:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .loader {
+            border: 5px solid #334155;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-verdict {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .result-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* Блок кнопок в конце */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-donate {
+            background: transparent;
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+
+        .btn-donate:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-tg {
+            background: #24a1de;
+            color: #ffffff;
+            border: 2px solid #24a1de;
+        }
+
+        .btn-tg:hover {
+            background-color: #1c82b6;
+            border-color: #1c82b6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(36, 161, 222, 0.4);
+        }
+
+        .btn-action span { margin-right: 10px; font-size: 1.1rem; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Душнометр 3000</h1>
+        <p class="subtitle">Узнай всю горькую правду о своем занудстве</p>
+
+        <!-- ЭКРАН СТАРТА -->
+        <div id="start-screen" class="card">
+            <p id="question-text">Готов измерить индекс духоты в помещении? Тест расширен до 20 жестких и жизненных вопросов.</p>
+            <button class="btn-start" onclick="startTest()">Включить прибор</button>
+        </div>
+
+        <!-- ЭКРАН ВОПРОСОВ -->
+        <div id="quiz-screen" class="card hidden">
+            <div class="progress-bar">
+                <div id="progress" class="progress-fill"></div>
+            </div>
+            <div id="question-title" style="font-size: 1.2rem; font-weight: 700; line-height: 1.4; margin-bottom: 25px; text-align: left; width: 100%;"></div>
+            <div class="answers-grid" id="answers-block"></div>
+        </div>
+
+        <!-- ЭКРАН ЗАГРУЗКИ -->
+        <div id="loading-screen" class="card hidden">
+            <div class="loader"></div>
+            <div id="loading-text" style="font-weight:700;">Замеряю уровень углекислого газа...</div>
+        </div>
+
+        <!-- ЭКРАН РЕЗУЛЬТАТА -->
+        <div id="result-screen" class="card hidden">
+            <div class="result-score" id="res-percent">0%</div>
+            <div class="result-verdict" id="res-verdict">Вердикт</div>
+            <div class="result-desc" id="res-desc">Описание</div>
+            
+            <div class="buttons-container">
+                <!-- КНОПКА ДОНАТА -->
+                <a href="https://t.me" target="_blank" class="btn-action btn-donate">
+                    <span>💨</span> Донат автору на кондей
+                </a>
+                <!-- ОТДЕЛЬНАЯ КНОПКА НА ТВОЙ ТГ -->
+                <a href="https://t.me" target="_blank" class="btn-action btn-tg">
+                    <span>✈️</span> Написать автору в Telegram
+                </a>
+            </div>
+            <br>
+            <button class="btn-restart" onclick="restartTest()">Пройти еще раз</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "1. Друг в переписке путает «тся» и «ться». Твоя реакция?", a: [{ t: "Вообще всё равно, я читаю мысли, а не буквы.", p: 0 }, { t: "Немного кольнет внутри, но промолчу.", p: 2 }, { t: "Отправлю скриншот правила и напишу капсом: «ЧТО ДЕЛАЕТЬ?!»", p: 5 }] },
+            { q: "2. На барной стойке стакан заполнен ровно наполовину. Какой он?", a: [{ t: "Наполовину полон, жизнь прекрасна!", p: 0 }, { t: "Наполовину пуст, всё тлен.", p: 2 }, { t: "Смотря какая жидкость, каков объём стакана и плотность воздуха.", p: 5 }] },
+            { q: "3. Твоё отношение к гороскопам, таро и натальным картам?", a: [{ t: "Ой, по приколу почитать утром, чисто поржать.", p: 0 }, { t: "Не верю, но людям нравится — пусть развлекаются.", p: 1 }, { t: "Начинаю душить фактами, что змееносец сместил все знаки на 30 градусов.", p: 5 }] },
+            { q: "4. Кто-то за столом говорит: «Я кушаю». Что думаешь?", a: [{ t: "Приятного аппетита человеку!", p: 0 }, { t: "Звучит как-то по-детски, но ладно.", p: 2 }, { t: "Взрослые люди должны говорить СЛОВО 'ЕМ'!! Меня аж трясет.", p: 5 }] },
+            { q: "5. Друзья зовут гулять, но синоптики обещают 10% вероятность дождя.", a: [{ t: "Погнали, если что — под навесом посидим.", p: 0 }, { t: "Возьму зонт, дождевик, сменные носки и повербанк.", p: 2 }, { t: "Никуда не пойду. Риск порчи обуви не оправдывает сомнительное веселье.", p: 5 }] },
+            { q: "6. Как ты рассказываешь историю или пересказываешь мем?", a: [{ t: "Быстро, эмоционально, забывая половину деталей.", p: 0 }, { t: "Нормально, главное передать суть.", p: 1 }, { t: "С предысторией на 40 минут, поясняя генезис шутки с 2012 года.", p: 5 }] },
+Используйте код с осторожностью.
+{ q: "7. Коллега на работе говорит: «Давай созвонимся в крайний раз».", a: [{ t: "Ок, жду звонка.", p: 0 }, { t: "Забавное суеверие, ну ладно.", p: 1 }, { t: "Громко заявляю: КРАЙНИМ бывает только плоть, север и мера! Разговор ПОСЛЕДНИЙ!", p: 5 }] },
+{ q: "8. Фильм, который вы смотрите в компании, нарушает законы физики.", a: [{ t: "Какая разница, это же красивый фантастический экшен!", p: 0 }, { t: "Ну да, забавно приврали.", p: 2 }, { t: "Каждую минуту бубню: 'Звук не распространяется в вакууме, это невозможно!'", p: 5 }] },
+{ q: "9. Твой знакомый произносит «звОнит» вместо «звонИт».", a: [{ t: "Да пофиг, главное я понял, о чем речь.", p: 0 }, { t: "Морщусь, но терплю.", p: 2 }, { t: "Прерываю на полуслове и демонстративно повторяю: 'ЗвонИт!!!'", p: 5 }] },
+{ q: "10. Ты пришел в ресторан и тебе принесли блюдо, где один ингредиент лежит несимметрично.", a: [{ t: "Мне его есть, а не фоткать. Разрушаю вилкой.", p: 0 }, { t: "Поправлю ножом ради эстетики.", p: 2 }, { t: "Позову менеджера и прочитаю лекцию о ресторанной геометрии.", p: 5 }] },
+{ q: "11. Какое описание идеально подходит твоей домашней аптечке?", a: [{ t: "Там лежит какой-то уголь и пластырь с 2019 года.", p: 0 }, { t: "Есть базовые таблетки от головы и живота.", p: 2 }, { t: "Всё рассортировано по категориям, у каждой таблетки проверен срок годности.", p: 5 }] },
+{ q: "12. Как ты реагируешь, когда в чате пишут «Доброго времени суток»?", a: [{ t: "Обычное приветствие, пишу привет в ответ.", p: 0 }, { t: "Звучит фальшиво, но игнорирую.", p: 1 }, { t: "Кидаю ссылку на статью Ильяхова о том, почему это лингвистический грех.", p: 5 }] },
+{ q: "13. Друг покупает вещь на 500 рублей дороже, чем она стоит на маркетплейсе.", a: [{ t: "Его деньги — его право.", p: 0 }, { t: "Скажу, что видел дешевле, чисто к слову.", p: 2 }, { t: "Буду три дня ворчать, что он спонсирует инфляцию и не умеет искать выгоду.", p: 5 }] },
+{ q: "14. Твоё отношение к правилу 'Не спать с грязной посудой в раковине'?", a: [{ t: "Если лень, она постоит там до выходных.", p: 0 }, { t: "Стараюсь мыть сразу, но без фанатизма.", p: 2 }, { t: "Это преступление против гигиены, не усну, пока раковина не заблестит.", p: 5 }] },
+{ q: "15. Тебе прислали мем, который ты видел неделю назад.", a: [{ t: "Поставлю лайк или смайлик, чтобы не обижать.", p: 0 }, { t: "Напишу 'баян'.", p: 2 }, { t: "Пришлю ссылку на первоисточник с точной датой публикации.", p: 5 }] },
+{ q: "16. Когда кто-то округляет число Пи до 3, ты:", a: [{ t: "А сколько оно ещё? Три и есть.", p: 0 }, { t: "Нормально для быстрых расчетов.", p: 1 }, { t: "Шепчу: '3.14159265... невежды'.", p: 5 }] },
+{ q: "17. Настольные игры с друзьями. Правила кажутся слишком сложными.", a: [{ t: "По ходу разберемся, давайте кидать кубик!", p: 0 }, { t: "Дайте мне 10 минут, я вчитаюсь.", p: 2 }, { t: "Беру книжку правил и дотошно зачитываю каждый пункт мелким шрифтом 2 часа.", p: 5 }] },
+{ q: "18. В песне популярного исполнителя допущена логическая ошибка.", a: [{ t: "Бит качает, слова не важны.", p: 0 }, { t: "Замечу, но подпевать продолжу.", p: 1 }, { t: "Напишу гневный разбор текста в комментариях под клипом.", p: 5 }] },
+{ q: "19. Что ты делаешь, когда видишь неровно висящую картину в гостях?", a: [{ t: "Вообще не замечу её существования.", p: 0 }, { t: "Посмотрю на неё пару раз за вечер.", p: 2 }, { t: "Подойду и тайно поправлю, используя уровень в смартфоне.", p: 5 }] },
+{ q: "20. Финальный вопрос: Тебе понравился этот тест?", a: [{ t: "Да, чисто угарнуть с пацанами!", p: 0 }, { t: "Нормальный интерактив для портфолио.", p: 2 }, { t: "Вообще-то, некоторые вопросы составлены некорректно с точки зрения психометрии.", p: 5 }] }]
+];
+let currentQuestion = 0;
+let totalPoints = 0;
+function startTest() {
+document.getElementById('start-screen').classList.add('hidden');
+document.getElementById('quiz-screen').classList.remove('hidden');
+showQuestion();
 }
+function showQuestion() {
+const qData = questions[currentQuestion];
+document.getElementById('question-title').innerText = qData.q;
+const answersBlock = document.getElementById('answers-block');
+answersBlock.innerHTML = '';
+qData.a.forEach(ans => {
+const btn = document.createElement('button');
+btn.className = 'btn-answer';
+btn.innerText = ans.t;
+btn.onclick = () => nextStep(ans.p);
+answersBlock.appendChild(btn);
+});
+const progressPercent = (currentQuestion / questions.length) * 100;
+document.getElementById('progress').style.width = ${progressPercent}%;
+}
+function nextStep(points) {
+totalPoints += points;
+currentQuestion++;
+if (currentQuestion < questions.length) {
+showQuestion();
+} else {
+showLoading();
+}
+}
+function showLoading() {
+document.getElementById('quiz-screen').classList.add('hidden');
+document.getElementById('loading-screen').classList.remove('hidden');
+const loadTexts = [
+"Замеряю уровень углекислого газа...",
+"Проветриваю комнату...",
+"Консультируюсь со словарем Даля...",
+"Измеряю влажность занудства..."
+];
+let i = 0;
+const interval = setInterval(() => {
+i++;
+if(i < loadTexts.length) {
+document.getElementById('loading-text').innerText = loadTexts[i];
+}
+}, 800);
+setTimeout(() => {
+clearInterval(interval);
+showResult();
+}, 3200);
+}
+function showResult() {
+document.getElementById('loading-screen').classList.add('hidden');
+document.getElementById('result-screen').classList.remove('hidden');
+document.body.classList.add('result-theme');
+if(totalPoints > 100) totalPoints = 100;
+document.getElementById('res-percent').innerText = ${totalPoints}%;
+let verdict = "";
+let desc = "";
+if (totalPoints <= 20) {
+verdict = "💨 Свежий ветерок (Форточник)";
+desc = "Ты идеальный человек. Душноты в тебе нет совсем. С тобой легко общаться, ты не цепляешься к словам и прощаешь людям тупость. Твоё окно всегда открыто настежь!";
+} else if (totalPoints <= 55) {
+verdict = "🛋️ Бытовой ворчун";
+desc = "Иногда в тебе просыпается дед, и ты не прочь побубнить на плохой сервис или глупый фильм. Но грань ты знаешь и душить людей часовыми лекциями не станешь. Жжить можно.";
+} else if (totalPoints <= 85) {
+verdict = "📜 Профессиональный зануда";
+desc = "Твоё любимое слово — «Вообще-то...». Когда ты заходишь в чат, люди инстинктивно идут открывать окна. Ты обожаешь исправлять чужие ошибки и доказывать свою правоту до победного.";
+} else {
+verdict = "🌋 Душный Лорд (Угроза удушья)";
+desc = "Максимальный уровень! Твоё занудство способно тушить пожары и останавливать ураганы. Ты хранитель пассивной агрессии и повелитель орфографических словарей. Рядом с тобой вянут комнатные цветы.";
+}
+document.getElementById('res-verdict').innerText = verdict;
+document.getElementById('res-desc').innerText = desc;
+}
+function restartTest() {
+currentQuestion = 0;
+totalPoints = 0;
+document.body.classList.remove('result-theme');
+document.getElementById('result-screen').classList.add('hidden');
+document.getElementById('start-screen').classList.remove('hidden');
+}
+
+
+
+### 💎 Что изменилось:
+1. **20 вопросов:** Тест стал длинным, детальным и гораздо более смешным для прохождения.
+2. **Две раздельные кнопки в конце:**
+   * Красная (`btn-donate`) — ведет на твой ТГ с прикольным текстом про кондей.
+   * Синяя оригинальная (`btn-tg`) — оформлена в классическом стиле Telegram для прямой связи с тобой как с автором проекта.
+
+<FollowUp>
+Заливай на GitHub! Когда обновишь, обязательно затести на друзьях — скинь им ссылку в чат и посмотри, **кто из вас окажется главным Душным Лордом**. Напиши, если всё успешно обновилось!
+</FollowUp>
