@@ -1,396 +1,821 @@
-https://t.me/avs_odin
-html
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Душнометр 3000 — Мега-тест на занудство</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #a855f7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d1d">
+<meta name="description" content="Душнометр 3000 — узнай свой уровень душноты в тесте из 20 вопросов!">
+<title>Душнометр 3000 🥵</title>
 
-        body.result-theme {
-            --accent-color: #ef4444;
-        }
+<style>
+:root {
+  --bg: #100d1d;
+  --card: #1c1730;
+  --purple: #a78bfa;
+  --pink: #f472b6;
+  --text: #f7f3ff;
+  --muted: #aaa2c2;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
+* { box-sizing: border-box; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 10% 10%, #39235b 0, transparent 40%),
+    radial-gradient(ellipse at 90% 90%, #4a1d49 0, transparent 38%),
+    var(--bg);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
 
-        .container {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
+button, a { font: inherit; }
 
-        h1 {
-            font-size: 2.3rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.app {
+  width: 100%;
+  max-width: 620px;
+  margin: auto;
+}
 
-        .subtitle {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
+.brand {
+  text-align: center;
+  margin-bottom: 22px;
+}
 
-        .card {
-            background-color: var(--card-bg);
-            padding: 35px 25px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 25px;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+.logo {
+  font-size: 52px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background-color: #334155;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
+h1 {
+  font-size: clamp(28px, 7vw, 42px);
+  line-height: 1.12;
+  margin: 8px 0;
+  letter-spacing: -1px;
+}
 
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background-color: var(--accent-color);
-        }
+.gradient {
+  color: var(--purple);
+  background: linear-gradient(90deg, #c4b5fd, #f9a8d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-        #question-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 25px;
-        }
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 10px auto;
+  line-height: 1.6;
+}
 
-        .answers-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
+.card {
+  background: rgba(28, 23, 48, .94);
+  border: 1px solid #44365f;
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 34px);
+  box-shadow: 0 22px 70px #0005;
+}
 
-        .btn-answer {
-            background-color: #334155;
-            color: var(--text-main);
-            border: 2px solid transparent;
-            padding: 14px 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 14px;
-            cursor: pointer;
-            text-align: left;
-        }
+.hidden { display: none !important; }
 
-        .btn-answer:hover {
-            border-color: var(--accent-color);
-            background-color: #475569;
-            transform: translateX(4px);
-        }
+.eyebrow {
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-        .btn-start, .btn-restart {
-            background-color: var(--accent-color);
-            color: #1e293b;
-            border: none;
-            padding: 18px 36px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            border-radius: 50px;
-            cursor: pointer;
-            text-transform: uppercase;
-            margin-top: 15px;
-        }
+h2 {
+  font-size: clamp(22px, 5vw, 29px);
+  line-height: 1.3;
+  margin: 14px 0 22px;
+}
 
-        .btn-start:hover, .btn-restart:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
-        }
+p { line-height: 1.65; }
 
-        .loader {
-            border: 5px solid #334155;
-            border-top: 5px solid var(--accent-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
+.primary, .answer, .secondary, .donate {
+  width: 100%;
+  border-radius: 14px;
+  padding: 15px 17px;
+  cursor: pointer;
+  transition: transform .15s, border-color .15s,
+              background .15s;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.primary {
+  color: #171024;
+  background: linear-gradient(110deg, #c4b5fd, #f9a8d4);
+  border: none;
+  font-weight: 850;
+  box-shadow: 0 8px 25px #a78bfa25;
+}
 
-        .result-score {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            animation: fadeIn 0.5s ease;
-        }
+.primary:hover, .answer:hover, .secondary:hover {
+  transform: translateY(-2px);
+}
 
-        .result-verdict {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
+.primary:active, .answer:active { transform: scale(.99); }
 
-        .result-desc {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.5;
-            margin-bottom: 30px;
-        }
+.answer {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 10px 0;
+  text-align: left;
+  color: var(--text);
+  background: #28213d;
+  border: 1px solid #45375e;
+  line-height: 1.5;
+}
 
-        /* Блок кнопок в конце */
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            max-width: 340px;
-        }
+.answer:hover, .answer:focus-visible {
+  border-color: var(--purple);
+  background: #342849;
+}
 
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 30px;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
+.answer .letter {
+  flex-shrink: 0;
+  color: var(--purple);
+  font-weight: 900;
+}
 
-        .btn-donate {
-            background: transparent;
-            color: #ef4444;
-            border: 2px solid #ef4444;
-        }
+.topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
 
-        .btn-donate:hover {
-            background-color: #ef4444;
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
-        }
+.track {
+  height: 7px;
+  border-radius: 99px;
+  background: #373047;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
 
-        .btn-tg {
-            background: #24a1de;
-            color: #ffffff;
-            border: 2px solid #24a1de;
-        }
+.fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #a78bfa, #f472b6);
+  border-radius: inherit;
+  transition: width .35s ease;
+}
 
-        .btn-tg:hover {
-            background-color: #1c82b6;
-            border-color: #1c82b6;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(36, 161, 222, 0.4);
-        }
+.note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 18px;
+}
 
-        .btn-action span { margin-right: 10px; font-size: 1.1rem; }
+.result-icon {
+  font-size: 76px;
+  margin: 12px 0;
+  animation: pop .65s ease both;
+}
 
-        .hidden { display: none !important; }
-    </style>
+.score {
+  font-size: clamp(54px, 13vw, 82px);
+  line-height: 1.1;
+  font-weight: 950;
+  letter-spacing: -4px;
+  background: linear-gradient(100deg, #c4b5fd, #f9a8d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.result-title {
+  font-size: clamp(25px, 6vw, 34px);
+  margin: 14px 0;
+}
+
+.result-description {
+  color: #d1c8e6;
+  line-height: 1.8;
+}
+
+.result-track { margin: 22px 0; }
+
+.result-track .track { height: 12px; }
+
+.result-track small {
+  color: var(--muted);
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.secondary {
+  color: var(--text);
+  background: #2a223e;
+  border: 1px solid #4a3a65;
+  font-weight: 700;
+}
+
+.donate {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(110deg, #7c3aed, #db2777);
+  font-weight: 800;
+  border: 0;
+}
+
+.donate:hover { filter: brightness(1.12); }
+
+.loading-icon {
+  font-size: 60px;
+  animation: spin 1.8s linear infinite;
+}
+
+.loading-text {
+  color: var(--purple);
+  font-weight: 750;
+  min-height: 28px;
+}
+
+.loading-dots::after {
+  content: "";
+  animation: dots 1.2s steps(4, end) infinite;
+}
+
+footer {
+  text-align: center;
+  color: #9389aa;
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #f9a8d4;
+  outline-offset: 3px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pop {
+  from { transform: scale(.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dots {
+  0% { content: ""; }
+  25% { content: "."; }
+  50% { content: ".."; }
+  75%, 100% { content: "..."; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
+
 <body>
+<main class="app">
+  <header class="brand">
+    <span class="logo" aria-hidden="true">🥵</span>
+    <h1>ДУШНОМЕТР <span class="gradient">3000</span></h1>
+    <p class="subtitle">
+      20 вопросов. Один подозрительный ты.<br>
+      Проверим, насколько с тобой душно?
+    </p>
+  </header>
 
-    <div class="container">
-        <h1>Душнометр 3000</h1>
-        <p class="subtitle">Узнай всю горькую правду о своем занудстве</p>
+  <section class="card" id="intro">
+    <div class="eyebrow">⚠️ Внимание, эксперимент</div>
+    <h2>Насколько ты душный человек?</h2>
+    <p>
+      Любишь исправлять чужие ошибки? Знаешь прогноз погоды
+      на три недели вперёд? Говоришь «вообще-то» чаще, чем «привет»?
+    </p>
+    <p>
+      Ответь на 20 вопросов и узнай свой уровень душноты.
+      Не переживай: диагноз шуточный, проветривание бесплатное.
+    </p>
+    <button class="primary" id="startBtn">Начать тест 🚀</button>
+    <p class="note">⏱ 2–3 минуты · 20 вопросов · 100% душноты</p>
+  </section>
 
-        <!-- ЭКРАН СТАРТА -->
-        <div id="start-screen" class="card">
-            <p id="question-text">Готов измерить индекс духоты в помещении? Тест расширен до 20 жестких и жизненных вопросов.</p>
-            <button class="btn-start" onclick="startTest()">Включить прибор</button>
-        </div>
+  <section class="card hidden" id="quiz" aria-live="polite">
+    <div class="topline">
+      <span id="questionNumber">Вопрос 1 из 20</span>
+      <span id="liveScore">Душнота: 0%</span>
+    </div>
+    <div
+      class="track"
+      role="progressbar"
+      aria-label="Прогресс теста"
+      aria-valuemin="0"
+      aria-valuemax="20"
+      aria-valuenow="0"
+      id="progress"
+    >
+      <div class="fill" id="progressFill"></div>
+    </div>
+    <div class="eyebrow" id="category">Бытовые ситуации</div>
+    <h2 id="questionText"></h2>
+    <div id="answers"></div>
+    <p class="note">Выбирай честно. Форточка всё видит 👁</p>
+  </section>
 
-        <!-- ЭКРАН ВОПРОСОВ -->
-        <div id="quiz-screen" class="card hidden">
-            <div class="progress-bar">
-                <div id="progress" class="progress-fill"></div>
-            </div>
-            <div id="question-title" style="font-size: 1.2rem; font-weight: 700; line-height: 1.4; margin-bottom: 25px; text-align: left; width: 100%;"></div>
-            <div class="answers-grid" id="answers-block"></div>
-        </div>
+  <section class="card hidden" id="loading" aria-live="polite">
+    <div style="text-align:center;padding:25px 0">
+      <div class="loading-icon" aria-hidden="true">🌀</div>
+      <h2>Идёт экспертиза личности...</h2>
+      <p class="loading-text loading-dots" id="loadingText">
+        Анализирую уровень занудства
+      </p>
+      <div class="track">
+        <div class="fill" id="loadingFill"></div>
+      </div>
+      <p class="note">Пожалуйста, не поправляй алгоритм.</p>
+    </div>
+  </section>
 
-        <!-- ЭКРАН ЗАГРУЗКИ -->
-        <div id="loading-screen" class="card hidden">
-            <div class="loader"></div>
-            <div id="loading-text" style="font-weight:700;">Замеряю уровень углекислого газа...</div>
-        </div>
+  <section class="card hidden" id="result" aria-live="polite">
+    <div class="eyebrow">Экспертиза завершена</div>
+    <div class="result-icon" id="resultIcon">🌬️</div>
+    <div class="score"><span id="finalScore">0</span>%</div>
+    <h2 class="result-title" id="resultTitle">Форточник</h2>
+    <p class="result-description" id="resultDescription"></p>
 
-        <!-- ЭКРАН РЕЗУЛЬТАТА -->
-        <div id="result-screen" class="card hidden">
-            <div class="result-score" id="res-percent">0%</div>
-            <div class="result-verdict" id="res-verdict">Вердикт</div>
-            <div class="result-desc" id="res-desc">Описание</div>
-            
-            <div class="buttons-container">
-                <!-- КНОПКА ДОНАТА -->
-                <a href="https://t.me" target="_blank" class="btn-action btn-donate">
-                    <span>💨</span> Донат автору на кондей
-                </a>
-                <!-- ОТДЕЛЬНАЯ КНОПКА НА ТВОЙ ТГ -->
-                <a href="https://t.me" target="_blank" class="btn-action btn-tg">
-                    <span>✈️</span> Написать автору в Telegram
-                </a>
-            </div>
-            <br>
-            <button class="btn-restart" onclick="restartTest()">Пройти еще раз</button>
-        </div>
+    <div class="result-track">
+      <div class="topline">
+        <span>Уровень душноты</span>
+        <span id="scoreLabel">0 из 100</span>
+      </div>
+      <div
+        class="track"
+        role="progressbar"
+        aria-label="Итоговая душнота"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="resultProgress"
+      >
+        <div class="fill" id="resultFill"></div>
+      </div>
+      <small>Научная точность: примерно как у гороскопа.</small>
     </div>
 
-    <script>
-        const questions = [
-            { q: "1. Друг в переписке путает «тся» и «ться». Твоя реакция?", a: [{ t: "Вообще всё равно, я читаю мысли, а не буквы.", p: 0 }, { t: "Немного кольнет внутри, но промолчу.", p: 2 }, { t: "Отправлю скриншот правила и напишу капсом: «ЧТО ДЕЛАЕТЬ?!»", p: 5 }] },
-            { q: "2. На барной стойке стакан заполнен ровно наполовину. Какой он?", a: [{ t: "Наполовину полон, жизнь прекрасна!", p: 0 }, { t: "Наполовину пуст, всё тлен.", p: 2 }, { t: "Смотря какая жидкость, каков объём стакана и плотность воздуха.", p: 5 }] },
-            { q: "3. Твоё отношение к гороскопам, таро и натальным картам?", a: [{ t: "Ой, по приколу почитать утром, чисто поржать.", p: 0 }, { t: "Не верю, но людям нравится — пусть развлекаются.", p: 1 }, { t: "Начинаю душить фактами, что змееносец сместил все знаки на 30 градусов.", p: 5 }] },
-            { q: "4. Кто-то за столом говорит: «Я кушаю». Что думаешь?", a: [{ t: "Приятного аппетита человеку!", p: 0 }, { t: "Звучит как-то по-детски, но ладно.", p: 2 }, { t: "Взрослые люди должны говорить СЛОВО 'ЕМ'!! Меня аж трясет.", p: 5 }] },
-            { q: "5. Друзья зовут гулять, но синоптики обещают 10% вероятность дождя.", a: [{ t: "Погнали, если что — под навесом посидим.", p: 0 }, { t: "Возьму зонт, дождевик, сменные носки и повербанк.", p: 2 }, { t: "Никуда не пойду. Риск порчи обуви не оправдывает сомнительное веселье.", p: 5 }] },
-            { q: "6. Как ты рассказываешь историю или пересказываешь мем?", a: [{ t: "Быстро, эмоционально, забывая половину деталей.", p: 0 }, { t: "Нормально, главное передать суть.", p: 1 }, { t: "С предысторией на 40 минут, поясняя генезис шутки с 2012 года.", p: 5 }] },
-Используйте код с осторожностью.
-{ q: "7. Коллега на работе говорит: «Давай созвонимся в крайний раз».", a: [{ t: "Ок, жду звонка.", p: 0 }, { t: "Забавное суеверие, ну ладно.", p: 1 }, { t: "Громко заявляю: КРАЙНИМ бывает только плоть, север и мера! Разговор ПОСЛЕДНИЙ!", p: 5 }] },
-{ q: "8. Фильм, который вы смотрите в компании, нарушает законы физики.", a: [{ t: "Какая разница, это же красивый фантастический экшен!", p: 0 }, { t: "Ну да, забавно приврали.", p: 2 }, { t: "Каждую минуту бубню: 'Звук не распространяется в вакууме, это невозможно!'", p: 5 }] },
-{ q: "9. Твой знакомый произносит «звОнит» вместо «звонИт».", a: [{ t: "Да пофиг, главное я понял, о чем речь.", p: 0 }, { t: "Морщусь, но терплю.", p: 2 }, { t: "Прерываю на полуслове и демонстративно повторяю: 'ЗвонИт!!!'", p: 5 }] },
-{ q: "10. Ты пришел в ресторан и тебе принесли блюдо, где один ингредиент лежит несимметрично.", a: [{ t: "Мне его есть, а не фоткать. Разрушаю вилкой.", p: 0 }, { t: "Поправлю ножом ради эстетики.", p: 2 }, { t: "Позову менеджера и прочитаю лекцию о ресторанной геометрии.", p: 5 }] },
-{ q: "11. Какое описание идеально подходит твоей домашней аптечке?", a: [{ t: "Там лежит какой-то уголь и пластырь с 2019 года.", p: 0 }, { t: "Есть базовые таблетки от головы и живота.", p: 2 }, { t: "Всё рассортировано по категориям, у каждой таблетки проверен срок годности.", p: 5 }] },
-{ q: "12. Как ты реагируешь, когда в чате пишут «Доброго времени суток»?", a: [{ t: "Обычное приветствие, пишу привет в ответ.", p: 0 }, { t: "Звучит фальшиво, но игнорирую.", p: 1 }, { t: "Кидаю ссылку на статью Ильяхова о том, почему это лингвистический грех.", p: 5 }] },
-{ q: "13. Друг покупает вещь на 500 рублей дороже, чем она стоит на маркетплейсе.", a: [{ t: "Его деньги — его право.", p: 0 }, { t: "Скажу, что видел дешевле, чисто к слову.", p: 2 }, { t: "Буду три дня ворчать, что он спонсирует инфляцию и не умеет искать выгоду.", p: 5 }] },
-{ q: "14. Твоё отношение к правилу 'Не спать с грязной посудой в раковине'?", a: [{ t: "Если лень, она постоит там до выходных.", p: 0 }, { t: "Стараюсь мыть сразу, но без фанатизма.", p: 2 }, { t: "Это преступление против гигиены, не усну, пока раковина не заблестит.", p: 5 }] },
-{ q: "15. Тебе прислали мем, который ты видел неделю назад.", a: [{ t: "Поставлю лайк или смайлик, чтобы не обижать.", p: 0 }, { t: "Напишу 'баян'.", p: 2 }, { t: "Пришлю ссылку на первоисточник с точной датой публикации.", p: 5 }] },
-{ q: "16. Когда кто-то округляет число Пи до 3, ты:", a: [{ t: "А сколько оно ещё? Три и есть.", p: 0 }, { t: "Нормально для быстрых расчетов.", p: 1 }, { t: "Шепчу: '3.14159265... невежды'.", p: 5 }] },
-{ q: "17. Настольные игры с друзьями. Правила кажутся слишком сложными.", a: [{ t: "По ходу разберемся, давайте кидать кубик!", p: 0 }, { t: "Дайте мне 10 минут, я вчитаюсь.", p: 2 }, { t: "Беру книжку правил и дотошно зачитываю каждый пункт мелким шрифтом 2 часа.", p: 5 }] },
-{ q: "18. В песне популярного исполнителя допущена логическая ошибка.", a: [{ t: "Бит качает, слова не важны.", p: 0 }, { t: "Замечу, но подпевать продолжу.", p: 1 }, { t: "Напишу гневный разбор текста в комментариях под клипом.", p: 5 }] },
-{ q: "19. Что ты делаешь, когда видишь неровно висящую картину в гостях?", a: [{ t: "Вообще не замечу её существования.", p: 0 }, { t: "Посмотрю на неё пару раз за вечер.", p: 2 }, { t: "Подойду и тайно поправлю, используя уровень в смартфоне.", p: 5 }] },
-{ q: "20. Финальный вопрос: Тебе понравился этот тест?", a: [{ t: "Да, чисто угарнуть с пацанами!", p: 0 }, { t: "Нормальный интерактив для портфолио.", p: 2 }, { t: "Вообще-то, некоторые вопросы составлены некорректно с точки зрения психометрии.", p: 5 }] }]
+    <div class="actions">
+      <button class="primary" id="shareBtn">📢 Поделиться результатом</button>
+      <button class="secondary" id="restartBtn">🔄 Пройти ещё раз</button>
+
+      <!-- ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЮ ССЫЛКУ ДОНАТА -->
+      <a
+        class="donate"
+        id="donateLink"
+        href="https://t.me/YOUR_TELEGRAM"
+        target="_blank"
+        rel="noopener noreferrer"
+      >❄️ Задонатить на кондиционер</a>
+    </div>
+    <p class="note">
+      Если стало душно — открой окно. Если понравилось — поддержи автора 💜
+    </p>
+  </section>
+
+  <footer>ДУШНОМЕТР 3000 · Не медицинский прибор 😎</footer>
+</main>
+
+<script>
+"use strict";
+
+// ==========================================
+// НАСТРОЙКА ССЫЛКИ НА ДОНАТ
+// ==========================================
+// Вставь свою настоящую ссылку.
+// Например: https://www.donationalerts.com/r/ТВОЙ_НИК
+// Или ссылку на свой Telegram: https://t.me/ТВОЙ_НИК
+const DONATE_URL = "https://t.me/avs_odin";
+
+// 20 вопросов. Каждый ответ даёт 0, 5 или 10 баллов.
+const questions = [
+  {
+    category: "Русский язык",
+    text: "Кто-то написал «тся» вместо «ться». Твои действия?",
+    answers: [
+      ["0 баллов", "Вообще пофиг, главное — суть.", 0],
+      ["5 баллов", "Дёрнется глаз, но промолчу.", 5],
+      ["10 баллов", "СРОЧНО ОБЪЯВЛЯЮ ВОЙНУ ГРАММАТИЧЕСКИМ ОШИБКАМ!", 10]
+    ]
+  },
+  {
+    category: "Погода",
+    text: "Друг зовёт гулять, но на улице облачно. Что ответишь?",
+    answers: [
+      ["0 баллов", "Го, я уже выхожу!", 0],
+      ["5 баллов", "Возьму зонт на всякий случай.", 5],
+      ["10 баллов", "По данным метеослужбы, прогулка нецелесообразна.", 10]
+    ]
+  },
+  {
+    category: "Космос и звёзды",
+    text: "Друг верит в гороскопы. Твоя реакция?",
+    answers: [
+      ["0 баллов", "Ахаха, прикольно. Какой у тебя знак?", 0],
+      ["5 баллов", "Ну, я в это не особо верю.", 5],
+      ["10 баллов", "СЕЙЧАС ОБЪЯСНЮ РАЗНИЦУ МЕЖДУ АСТРОНОМИЕЙ И АСТРОЛОГИЕЙ.", 10]
+    ]
+  },
+  {
+    category: "Общение",
+    text: "Кто-то рассказывает историю и немного привирает.",
+    answers: [
+      ["0 баллов", "Подыграю, история же интересная.", 0],
+      ["5 баллов", "Уточню пару деталей.", 5],
+      ["10 баллов", "Прерву рассказ и проведу фактчекинг.", 10]
+    ]
+  },
+  {
+    category: "Еда",
+    text: "Друг неправильно ест пиццу. Что будешь делать?",
+    answers: [
+      ["0 баллов", "Главное, чтобы ему было вкусно.", 0],
+      ["5 баллов", "Спрошу, почему он ест именно так.", 5],
+      ["10 баллов", "Объясню правильную технику употребления пиццы.", 10]
+    ]
+  },
+  {
+    category: "Технологии",
+    text: "Кто-то называет любой системный блок «процессором».",
+    answers: [
+      ["0 баллов", "Я понял, о чём речь, и ладно.", 0],
+      ["5 баллов", "Немного коробит, но переживу.", 5],
+      ["10 баллов", "Сначала лекция про CPU, потом практика.", 10]
+    ]
+  },
+  {
+    category: "Время",
+    text: "Друг опоздал на встречу на три минуты.",
+    answers: [
+      ["0 баллов", "Да ничего страшного.", 0],
+      ["5 баллов", "Напомню, что договаривались на другое время.", 5],
+      ["10 баллов", "Подготовлю график его опозданий за последний год.", 10]
+    ]
+  },
+  {
+    category: "Музыка",
+    text: "Друг говорит, что его любимая песня — лучшая в мире.",
+    answers: [
+      ["0 баллов", "Включай, заценим!", 0],
+      ["5 баллов", "На вкус и цвет, конечно.", 5],
+      ["10 баллов", "Объясню, почему объективно лучшей песни не существует.", 10]
+    ]
+  },
+  {
+    category: "Интернет",
+    text: "В комментариях кто-то написал фактическую ошибку.",
+    answers: [
+      ["0 баллов", "Листаю дальше, у меня дела.", 0],
+      ["5 баллов", "Оставлю короткое исправление.", 5],
+      ["10 баллов", "Напишу статью с источниками и библиографией.", 10]
+    ]
+  },
+  {
+    category: "Покупки",
+    text: "Друг купил дорогую вещь, хотя была скидка на другую.",
+    answers: [
+      ["0 баллов", "Его деньги — его решение.", 0],
+      ["5 баллов", "Расскажу, где видел дешевле.", 5],
+      ["10 баллов", "Составлю сравнительную таблицу цен за полгода.", 10]
+    ]
+  },
+  {
+    category: "Спорт",
+    text: "Во время дружеской игры кто-то нарушил правило.",
+    answers: [
+      ["0 баллов", "Да ладно, играем дальше.", 0],
+      ["5 баллов", "Эй, так вроде нельзя.", 5],
+      ["10 баллов", "Требую повторить эпизод с разных ракурсов.", 10]
+    ]
+  },
+  {
+    category: "Фотографии",
+    text: "Друг выложил фото с кривым горизонтом.",
+    answers: [
+      ["0 баллов", "Классное фото!", 0],
+      ["5 баллов", "Я бы чуть повернул горизонт.", 5],
+      ["10 баллов", "Угол наклона составляет примерно 3,7 градуса.", 10]
+    ]
+  },
+  {
+    category: "Наука",
+    text: "Кто-то говорит: «Мы используем только 10% мозга».",
+    answers: [
+      ["0 баллов", "Интересная теория из интернета.", 0],
+      ["5 баллов", "Вообще-то это миф.", 5],
+      ["10 баллов", "Достаю презентацию о нейробиологии на 48 слайдов.", 10]
+    ]
+  },
+  {
+    category: "Праздники",
+    text: "Друг поздравил тебя с праздником на день раньше.",
+    answers: [
+      ["0 баллов", "Спасибо! Очень приятно.", 0],
+      ["5 баллов", "Он вообще-то завтра, но спасибо!", 5],
+      ["10 баллов", "Предоставлю историческую справку о дате праздника.", 10]
+    ]
+  },
+  {
+    category: "Слова",
+    text: "Кто-то произнёс слово с непривычным ударением.",
+    answers: [
+      ["0 баллов", "Я даже не заметил.", 0],
+      ["5 баллов", "Хм, я вроде произношу иначе.", 5],
+      ["10 баллов", "Открываю орфоэпический словарь прямо посреди разговора.", 10]
+    ]
+  },
+  {
+    category: "Кино",
+    text: "Друг не понял концовку фильма.",
+    answers: [
+      ["0 баллов", "Ну, каждый понял по-своему.", 0],
+      ["5 баллов", "Объясню свою версию.", 5],
+      ["10 баллов", "Начинаю разбор символизма, монтажа и авторского замысла.", 10]
+    ]
+  },
+  {
+    category: "Быт",
+    text: "Кто-то оставил одну чашку в раковине.",
+    answers: [
+      ["0 баллов", "Помою, если мешает.", 0],
+      ["5 баллов", "Попрошу за собой убирать.", 5],
+      ["10 баллов", "Разработаю регламент использования раковины.", 10]
+    ]
+  },
+  {
+    category: "Гаджеты",
+    text: "Друг заряжает телефон, когда там ещё 40%.",
+    answers: [
+      ["0 баллов", "И что? Пусть заряжает.", 0],
+      ["5 баллов", "Я обычно заряжаю немного позже.", 5],
+      ["10 баллов", "Объясню циклы зарядки и мифы о батареях.", 10]
+    ]
+  },
+  {
+    category: "Споры",
+    text: "В компании спорят о какой-то мелочи. Твои действия?",
+    answers: [
+      ["0 баллов", "Посмеюсь и сменю тему.", 0],
+      ["5 баллов", "Попробую разобраться, кто прав.", 5],
+      ["10 баллов", "Не успокоюсь, пока вопрос не будет закрыт.", 10]
+    ]
+  },
+  {
+    category: "Главный босс",
+    text: "Друг говорит: «Да какая разница, и так понятно!»",
+    answers: [
+      ["0 баллов", "И правда, идём дальше.", 0],
+      ["5 баллов", "Ну, иногда детали всё-таки важны.", 5],
+      ["10 баллов", "ВОТ ИМЕННО СЕЙЧАС РАЗНИЦА И БУДЕТ ОБЪЯСНЕНА.", 10]
+    ]
+  }
 ];
-let currentQuestion = 0;
-let totalPoints = 0;
+
+const results = [
+  {
+    max: 10,
+    icon: "🌬️",
+    title: "Форточник",
+    description:
+      "Ты — ходячий свежий воздух. Не придираешься к мелочам, умеешь расслабляться и не превращаешь каждый разговор в научный симпозиум. Рядом с тобой даже закрытое окно чувствует себя открытым."
+  },
+  {
+    max: 50,
+    icon: "🪟",
+    title: "Бытовой душнила",
+    description:
+      "Иногда ты говоришь «вообще-то», но ещё умеешь вовремя остановиться. Можешь поворчать на опоздание курьера, уточнить пару фактов и всё-таки пойти гулять. Проветривание пока необязательно."
+  },
+  {
+    max: 90,
+    icon: "🥵",
+    title: "Профессиональный зануда",
+    description:
+      "Ты замечаешь ошибки быстрее, чем люди успевают нажать «отправить». В твоих сообщениях живут уточнения, сноски и невысказанное «я же говорил». Окна в чате уже приоткрыты."
+  },
+  {
+    max: 100,
+    icon: "👑",
+    title: "Душный Лорд",
+    description:
+      "Легендарный уровень! Ты способен превратить вопрос «как дела?» в исследование социально-экономических факторов. Твоё «вообще-то» слышно в соседнем часовом поясе. Срочно назначить тебя главным инспектором форточек!"
+  }
+];
+
+const $ = id => document.getElementById(id);
+
+const screens = ["intro", "quiz", "loading", "result"];
+let current = 0;
+let total = 0;
+let locked = false;
+let loadingTimer = null;
+let loadingInterval = null;
+
+function showScreen(name) {
+  screens.forEach(id => $(id).classList.toggle("hidden", id !== name));
+}
+
 function startTest() {
-document.getElementById('start-screen').classList.add('hidden');
-document.getElementById('quiz-screen').classList.remove('hidden');
-showQuestion();
+  clearTimeout(loadingTimer);
+  clearInterval(loadingInterval);
+  current = 0;
+  total = 0;
+  locked = false;
+  showScreen("quiz");
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-function showQuestion() {
-const qData = questions[currentQuestion];
-document.getElementById('question-title').innerText = qData.q;
-const answersBlock = document.getElementById('answers-block');
-answersBlock.innerHTML = '';
-qData.a.forEach(ans => {
-const btn = document.createElement('button');
-btn.className = 'btn-answer';
-btn.innerText = ans.t;
-btn.onclick = () => nextStep(ans.p);
-answersBlock.appendChild(btn);
-});
-const progressPercent = (currentQuestion / questions.length) * 100;
-document.getElementById('progress').style.width = ${progressPercent}%;
+
+function renderQuestion() {
+  locked = false;
+  const q = questions[current];
+
+  $("questionNumber").textContent =
+    `Вопрос ${current + 1} из ${questions.length}`;
+
+  $("liveScore").textContent =
+    `Набрано: ${total} / ${current * 10}`;
+
+  $("progressFill").style.width =
+    `${(current / questions.length) * 100}%`;
+
+  $("progress").setAttribute("aria-valuenow", current);
+  $("category").textContent = q.category;
+  $("questionText").textContent = q.text;
+
+  const answers = $("answers");
+  answers.replaceChildren();
+
+  q.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "answer";
+
+    const letter = document.createElement("span");
+    letter.className = "letter";
+    letter.textContent = ["A", "B", "C"][index] + ".";
+
+    const label = document.createElement("span");
+    label.textContent = answer[1];
+
+    button.append(letter, label);
+    button.type = "button";
+    button.addEventListener("click", () => selectAnswer(answer[2]));
+
+    answers.append(button);
+  });
 }
-function nextStep(points) {
-totalPoints += points;
-currentQuestion++;
-if (currentQuestion < questions.length) {
-showQuestion();
-} else {
-showLoading();
+
+function selectAnswer(points) {
+  if (locked) return;
+  locked = true;
+  total += points;
+  current++;
+
+  if (current < questions.length) {
+    renderQuestion();
+    $("liveScore").textContent = `Набрано: ${total} / ${current * 10}`;
+    $("progressFill").style.width =
+      `${(current / questions.length) * 100}%`;
+    $("progress").setAttribute("aria-valuenow", current);
+  } else {
+    showLoading();
+  }
 }
-}
+
 function showLoading() {
-document.getElementById('quiz-screen').classList.add('hidden');
-document.getElementById('loading-screen').classList.remove('hidden');
-const loadTexts = [
-"Замеряю уровень углекислого газа...",
-"Проветриваю комнату...",
-"Консультируюсь со словарем Даля...",
-"Измеряю влажность занудства..."
-];
-let i = 0;
-const interval = setInterval(() => {
-i++;
-if(i < loadTexts.length) {
-document.getElementById('loading-text').innerText = loadTexts[i];
+  showScreen("loading");
+  $("loadingFill").style.width = "0%";
+
+  const messages = [
+    "Анализирую уровень занудства",
+    "Проветриваю комнату",
+    "Сверяюсь со словарём",
+    "Измеряю давление в чате",
+    "Ищу ближайшую форточку",
+    "Подготавливаю вердикт"
+  ];
+
+  let index = 0;
+  $("loadingText").textContent = messages[0];
+
+  const start = Date.now();
+  const duration = 3000;
+
+  loadingInterval = setInterval(() => {
+    const elapsed = Date.now() - start;
+    const progress = Math.min(100, elapsed / duration * 100);
+
+    $("loadingFill").style.width = progress + "%";
+
+    const nextIndex = Math.min(
+      messages.length - 1,
+      Math.floor(progress / 100 * messages.length)
+    );
+
+    if (nextIndex !== index) {
+      index = nextIndex;
+      $("loadingText").textContent = messages[index];
+    }
+  }, 80);
+
+  loadingTimer = setTimeout(() => {
+    clearInterval(loadingInterval);
+    $("loadingFill").style.width = "100%";
+    showResult();
+  }, duration);
 }
-}, 800);
-setTimeout(() => {
-clearInterval(interval);
-showResult();
-}, 3200);
-}
+
 function showResult() {
-document.getElementById('loading-screen').classList.add('hidden');
-document.getElementById('result-screen').classList.remove('hidden');
-document.body.classList.add('result-theme');
-if(totalPoints > 100) totalPoints = 100;
-document.getElementById('res-percent').innerText = ${totalPoints}%;
-let verdict = "";
-let desc = "";
-if (totalPoints <= 20) {
-verdict = "💨 Свежий ветерок (Форточник)";
-desc = "Ты идеальный человек. Душноты в тебе нет совсем. С тобой легко общаться, ты не цепляешься к словам и прощаешь людям тупость. Твоё окно всегда открыто настежь!";
-} else if (totalPoints <= 55) {
-verdict = "🛋️ Бытовой ворчун";
-desc = "Иногда в тебе просыпается дед, и ты не прочь побубнить на плохой сервис или глупый фильм. Но грань ты знаешь и душить людей часовыми лекциями не станешь. Жжить можно.";
-} else if (totalPoints <= 85) {
-verdict = "📜 Профессиональный зануда";
-desc = "Твоё любимое слово — «Вообще-то...». Когда ты заходишь в чат, люди инстинктивно идут открывать окна. Ты обожаешь исправлять чужие ошибки и доказывать свою правоту до победного.";
-} else {
-verdict = "🌋 Душный Лорд (Угроза удушья)";
-desc = "Максимальный уровень! Твоё занудство способно тушить пожары и останавливать ураганы. Ты хранитель пассивной агрессии и повелитель орфографических словарей. Рядом с тобой вянут комнатные цветы.";
-}
-document.getElementById('res-verdict').innerText = verdict;
-document.getElementById('res-desc').innerText = desc;
-}
-function restartTest() {
-currentQuestion = 0;
-totalPoints = 0;
-document.body.classList.remove('result-theme');
-document.getElementById('result-screen').classList.add('hidden');
-document.getElementById('start-screen').classList.remove('hidden');
+  // 20 вопросов по 10 баллов = максимум 200.
+  // Преобразуем результат в проценты от 0 до 100.
+  const percentage = Math.round(total / (questions.length * 10) * 100);
+
+  const result = results.find(item => percentage <= item.max)
+    || results[results.length - 1];
+
+  $("finalScore").textContent = percentage;
+  $("resultIcon").textContent = result.icon;
+  $("resultTitle").textContent = result.title;
+  $("resultDescription").textContent = result.description;
+  $("scoreLabel").textContent = `${percentage} из 100`;
+
+  $("resultFill").style.width = percentage + "%";
+  $("resultProgress").setAttribute("aria-valuenow", percentage);
+
+  showScreen("result");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+async function shareResult() {
+  const percentage = Math.round(total / (questions.length * 10) * 100);
+  const title = $("resultTitle").textContent;
+  const url = window.location.href.split("#")[0];
 
+  const text =
+    `🥵 Мой результат в «Душнометре 3000»!\n` +
+    `Моя душнота: ${percentage}%\n` +
+    `Вердикт: ${title}!\n\n` +
+    `Проверь себя: ${url}`;
 
-### 💎 Что изменилось:
-1. **20 вопросов:** Тест стал длинным, детальным и гораздо более смешным для прохождения.
-2. **Две раздельные кнопки в конце:**
-   * Красная (`btn-donate`) — ведет на твой ТГ с прикольным текстом про кондей.
-   * Синяя оригинальная (`btn-tg`) — оформлена в классическом стиле Telegram для прямой связи с тобой как с автором проекта.
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Душнометр 3000",
+        text
+      });
+      return;
+    } catch (error) {
+      if (error.name === "AbortError") return;
+    }
+  }
 
-<FollowUp>
-Заливай на GitHub! Когда обновишь, обязательно затести на друзьях — скинь им ссылку в чат и посмотри, **кто из вас окажется главным Душным Лордом**. Напиши, если всё успешно обновилось!
-</FollowUp>
+  try {
+    await navigator.clipboard.writeText(text);
+    $("shareBtn").textContent = "✅ Результат скопирован!";
+  } catch {
+    window.prompt("Скопируй свой результат:", text);
+  }
+}
+
+// Устанавливаем ссылку доната из одного места.
+$("donateLink").href = DONATE_URL;
+
+$("startBtn").addEventListener("click", startTest);
+$("restartBtn").addEventListener("click", startTest);
+$("shareBtn").addEventListener("click", shareResult);
+</script>
+</body>
+</html>
